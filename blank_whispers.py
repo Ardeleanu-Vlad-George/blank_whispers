@@ -12,5 +12,9 @@ with open(sys.argv[1], 'r') as src:
     for line in src:
         code += line
 
+for char_idx in range(len(code)):
+    if code[char_idx] in " \t\n":
+        continue
+    print(code[char_idx], end='')
 
-print(code, end='')
+print()
