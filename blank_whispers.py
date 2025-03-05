@@ -12,11 +12,6 @@ with open(sys.argv[1], 'r') as file:
     for line in file:
         code += line
 
-def comment_at_in(idx, src):
-    if src[idx] == 'm':
-        return 2
-    return 0
-
 xtra_jumps = 0
 line_idx = 1
 colm_idx = 0
@@ -38,8 +33,8 @@ for char_idx in range(len(code)):
     # this is useful for languages where in order 
     # to start a 'one-line' comment you need a sequence
     # of multiple chars
-    xtra_jumps = comment_at_in(char_idx, code)
-    if xtra_jumps:
+    if code[char_idx] == 'm':
         print("Comment detected at: (%d, %d)" % (line_idx, colm_idx))
+        xtra_jumps=2
 
 print("Program ended")
