@@ -7,3 +7,6 @@ A 'blank' will be literaly be written inside the code, but it can contain extra 
  'blank', etc.).
 The 'blank' will be signaled using the already existing syntax for writting one-line comments inside the language, except an extra '?' is 
  expected right after the comments starting chars to mark it as a 'blank'.
+The project will contain two directories: './source/' for storing the source code that will be analyzed and './logged/' to which certain 
+ outputs of the main file './blank_whispers.py' can be redirected. Considering the purpose of the project, the first one is 'git'-tracked
+ while the second isn't.
