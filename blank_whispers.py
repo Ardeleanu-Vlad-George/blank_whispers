@@ -15,6 +15,14 @@ with open(sys.argv[1], 'r') as file:
 xtra_jumps = 0
 line_idx = 1
 colm_idx = 0
+extn_idx = 0
+
+for extn_idx in range(len(sys.argv[1])):
+    if sys.argv[1][extn_idx] == '.':
+        break
+
+extn = sys.argv[1][extn_idx+1:]
+print("File extension:", extn)
 
 for char_idx in range(len(code)):
     colm_idx+=1
