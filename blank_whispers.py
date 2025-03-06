@@ -16,9 +16,20 @@ def C_comment_detection(idx, src):
 
 C_rules      = ('C source file', 'c', C_comment_detection)
 
+Bash_comment_detection = lambda idx, src: Python_comment_detection(idx, src)
+
+Bash_rules = ('Bash script', 'sh', Bash_comment_detection)
+
+def Lua_comment_detection(idx, src):
+    if src[idx]=='-' and src[idx+1]=='-':
+        return 2
+    return 0
+
+Lua_rules = ('Lua script', 'lua', Lua_comment_detection)
+
 # Define more rules here, then add them to 'all_rules'
 
-all_rules = (Python_rules, C_rules)
+all_rules = (Python_rules, C_rules, Bash_rules, Lua_rules)
 
 
 '''
