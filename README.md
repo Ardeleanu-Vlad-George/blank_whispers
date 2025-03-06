@@ -13,3 +13,5 @@ The comment type is deduced from the extension of the file, which must be simple
 The project will contain two directories: './source/' for storing the source code that will be analyzed and './logged/' to which certain 
  outputs of the main file './blank_whispers.py' can be redirected. Considering the purpose of the project, the first one is 'git'-tracked
  while the second isn't.
+
+Find a better way to detect comments and a better way to ignore the 'shebang' in script files. 
