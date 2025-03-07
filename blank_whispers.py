@@ -42,13 +42,12 @@ if len(sys.argv) != 2:
     print("Please give just one CLA, otherwise the program can't work")
     exit(-1)
 
-extn_idx = 0
+extn = sys.argv[1].find('.')
+if extn == -1:
+    print("File doesn't have an extension. Type can't be deduced.")
+    exit(-2)
 
-for extn_idx in range(len(sys.argv[1])):
-    if sys.argv[1][extn_idx] == '.':
-        break
-
-extn = sys.argv[1][extn_idx+1:]
+extn = sys.argv[1][extn+1:]
 
 name, sqnc = None, None
 
@@ -58,7 +57,7 @@ for rule in all_rules:
 
 if name is None:
     print("'%s' is an unknown file extension. Cannot detect it's type for processing." % (extn,))
-    exit(-1)
+    exit(-3)
 
 print("Detected next file type:", name)
 
@@ -72,30 +71,30 @@ with open(sys.argv[1], 'r') as file:
         code += line
 
 cmnt_jumps = 0
-line_idx = 1 + (1 if 'script' in name else 0)
-colm_idx = 0
+line = 1 + (1 if 'script' in name else 0)
+colm = 0
 
-for char_idx in range(len(code)):
-    colm_idx+=1
+# '_' means just the current index, it's as a working variable
+for _ in range(len(code)):
+    colm+=1
     if cmnt_jumps:
         cmnt_jumps-=1
         continue
-    if code[char_idx] in " \t\n":
-        if code[char_idx] == '\n':
-            line_idx+=1
-            colm_idx=0
+    if code[_] in " \t\n":
+        if code[_] == '\n':
+            line, colm= line+1, 0
         continue
-    # print(code[char_idx], end='')
+    # print(code[_], end='')
 
     # the 'cmnt_jumps' variable will be used to jump over 
     # chars that don't need to further be analyzed
     # this is useful for languages where in order 
     # to start a 'one-line' comment you need a sequence
     # of multiple chars
-    if code[char_idx:char_idx+len(sqnc)] == sqnc:
+    if code[_:_+len(sqnc)] == sqnc:
         cmnt_jumps = len(sqnc)-1
-        if code[char_idx+cmnt_jumps+1]=='?':
-            print("Blank detected at: (%d, %d)" % (line_idx, colm_idx))
-            cmnt_jumps+=1
+        if code[_+cmnt_jumps+1:_+cmnt_jumps+3]=='? ':
+            print("Blank detected at: (%d, %d)" % (line, colm), end='\n\t')
+            cmnt_jumps+=2
 
 print("Program ended")
