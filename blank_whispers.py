@@ -70,31 +70,35 @@ with open(sys.argv[1], 'r') as file:
     for line in file:
         code += line
 
-cmnt_jumps = 0
+jump = 0
 line = 1 + (1 if 'script' in name else 0)
 colm = 0
+blank_on = False
 
 # '_' means just the current index, it's as a working variable
 for _ in range(len(code)):
     colm+=1
-    if cmnt_jumps:
-        cmnt_jumps-=1
+
+    if jump:
+        jump-=1
         continue
+
+    if blank_on:
+        print(code[_], end='')
+        if code[_] == '\n':
+            blank_on = False
+        continue
+
     if code[_] in " \t\n":
         if code[_] == '\n':
             line, colm= line+1, 0
         continue
-    # print(code[_], end='')
 
-    # the 'cmnt_jumps' variable will be used to jump over 
-    # chars that don't need to further be analyzed
-    # this is useful for languages where in order 
-    # to start a 'one-line' comment you need a sequence
-    # of multiple chars
     if code[_:_+len(sqnc)] == sqnc:
-        cmnt_jumps = len(sqnc)-1
-        if code[_+cmnt_jumps+1:_+cmnt_jumps+3]=='? ':
+        jump = len(sqnc)-1
+        if code[_+jump+1:_+jump+3]=='? ':
             print("Blank detected at: (%d, %d)" % (line, colm), end='\n\t')
-            cmnt_jumps+=2
+            jump+=2
+            blank_on=True
 
 print("Program ended")
