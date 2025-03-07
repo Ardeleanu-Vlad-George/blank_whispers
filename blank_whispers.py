@@ -94,6 +94,8 @@ for char_idx in range(len(code)):
     # of multiple chars
     if code[char_idx:char_idx+len(sqnc)] == sqnc:
         cmnt_jumps = len(sqnc)-1
-        print("Comment detected at: (%d, %d)" % (line_idx, colm_idx))
+        if code[char_idx+cmnt_jumps+1]=='?':
+            print("Blank detected at: (%d, %d)" % (line_idx, colm_idx))
+            cmnt_jumps+=1
 
 print("Program ended")
