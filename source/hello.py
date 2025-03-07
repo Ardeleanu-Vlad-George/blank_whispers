@@ -1,5 +1,3 @@
 #!/usr/bin/python3
-msg = "Hello, World!"
-#? can be detected it 
+msg = #? fill in any message you want to print 
 print(msg)
-#?can't be detected it 

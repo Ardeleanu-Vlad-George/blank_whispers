@@ -43,6 +43,7 @@ if len(sys.argv) != 2:
     exit(-1)
 
 extn = sys.argv[1].find('.')
+
 if extn == -1:
     print("File doesn't have an extension. Type can't be deduced.")
     exit(-2)
@@ -74,7 +75,9 @@ jump = 0
 line = 1 + (1 if 'script' in name else 0)
 colm = 0
 blank_on = False
+blank_count = 0
 
+print("Below are the 'blanks' detected in order of appearance within the file")
 # '_' means just the current index, it's as a working variable
 for _ in range(len(code)):
     colm+=1
@@ -97,8 +100,12 @@ for _ in range(len(code)):
     if code[_:_+len(sqnc)] == sqnc:
         jump = len(sqnc)-1
         if code[_+jump+1:_+jump+3]=='? ':
-            print("Blank detected at: (%d, %d)" % (line, colm), end='\n\t')
+            print("\t(%d, %d) : " % (line, colm), end='')
             jump+=2
             blank_on=True
+            blank_count+=1
 
-print("Program ended")
+if blank_count:
+    print("Reached EOF. %d blank(s) present within the file" % (blank_count,))
+else:
+    print("Reached EOF. NO blanks present within the file")

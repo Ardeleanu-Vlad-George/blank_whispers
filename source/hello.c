@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-int main(){ //? THIS IS A BLANK
-  printf("Hello, World!");
-  return 0;
-  // m - can detect it 
+int main(){ 
+  printf(); //? Between the paranthesis, write any C style string
+  return ; //? After 'return', write any integer literal
 }
